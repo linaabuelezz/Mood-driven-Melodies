@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'CustomFont';
+    src: url('./assets/fonts/Positions.otf') format('truetype');
+  }
+  
+  .custom-font {
+    font-family: 'CustomFont', sans-serif;
+  }
