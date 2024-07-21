@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "../../App.css";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import "../../fonts.css";
+import Typing from 'react-typing-effect';
 
 const Homepage = () => {
   const [loading, setLoading] = useState(false);
@@ -86,34 +87,34 @@ const Homepage = () => {
             onSubmit={handleSubmit}
             className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg space-x-4 mb-4"
           >
-            <label htmlFor="input" className="font-mono">
+            <label htmlFor="input" className="header-font text-xl">
               Please enter a word to describe your mood.
             </label>
             <br></br>
             <input
               type="text"
               id="input"
-              className="border-2 border-gray-200 my-6 rounded-l"
+              className="border-2 border-gray-200 my-6 rounded-md button-font"
               onChange={(e) => setMood(e.target.value)}
             ></input>
             <br></br>
             <button
               type="submit"
-              className="bg-blue-800 rounded-xl p-2  shadow-lg text-white font-mono z-20 hover:scale-110"
+              className="bg-blue-800 rounded-xl p-2  shadow-lg text-white button-font z-20 hover:scale-110"
             >
               Load suggestion
             </button>
             {errorMessage && (
-              <p className="text-red-500 mt-2">{errorMessage}</p>
+              <p className="text-red-500 mt-2 header-font">{errorMessage}</p>
             )}
           </form>
           <div className="z-20">
-            <h2 className="font-mono mb-4 text-white">Song suggestions:</h2>
+            <h2 className="custom-font text-xl mb-3 text-white">Song suggestions:</h2>
             <div className="border-2 border-gray-500 p-4 rounded-lg max-w-sm mx-auto z-20 bg-black">
               {!loading && (
-                <p className="text-align-left text-white">{apiData}</p>
+                <Typing className="text-align-left text-white" text={apiData} />
               )}
-              {loading && <p>Loading...</p>}
+              {loading && <p className="text-white">Loading...</p>}
             </div>
           </div>
         </div>

@@ -6,3 +6,21 @@
   .custom-font {
     font-family: 'CustomFont', sans-serif;
   }
+
+@font-face {
+    font-family: 'HeaderFont';
+    src: url('./assets/fonts/Pioggia.ttf') format('truetype');
+}
+
+.header-font {
+    font-family: 'HeaderFont', sans-serif;
+}
+
+@font-face {
+    font-family: 'ButtonFont';
+    src: url('./assets/fonts/LEMONMILK.otf') format('truetype');
+}
+
+.button-font {
+    font-family: 'ButtonFont', sans-serif;
+}
