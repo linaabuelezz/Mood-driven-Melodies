@@ -88,7 +88,7 @@ const Homepage = () => {
             className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg space-x-4 mb-4"
           >
             <label htmlFor="input" className="header-font text-xl">
-              Please enter a word to describe your mood.
+              Please enter 1-3 words to describe your mood.
             </label>
             <br></br>
             <input
@@ -109,12 +109,12 @@ const Homepage = () => {
             )}
           </form>
           <div className="z-20">
-            <h2 className="custom-font text-xl mb-3 text-white">Song suggestions:</h2>
+            <h2 className="custom-font text-xl mb-3 text-white">Song suggestion:</h2>
             <div className="border-2 border-gray-500 p-4 rounded-lg max-w-sm mx-auto z-20 bg-black">
               {!loading && (
-                <Typing className="text-align-left text-white" text={apiData} />
+                <Typing className="text-align-left text-white output-font text-lg" text={apiData} />
               )}
-              {loading && <p className="text-white">Loading...</p>}
+              {loading && <p className="text-white output-font">Loading...</p>}
             </div>
           </div>
         </div>

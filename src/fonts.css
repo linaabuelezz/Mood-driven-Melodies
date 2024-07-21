@@ -24,3 +24,13 @@
 .button-font {
     font-family: 'ButtonFont', sans-serif;
 }
+
+@font-face {
+    font-family: 'OutputFont';
+    src: url('./assets/fonts/REFOLTER.otf') format('truetype');
+}
+
+.output-font {
+    font-family: 'OutputFont', Serif;
+}
+
