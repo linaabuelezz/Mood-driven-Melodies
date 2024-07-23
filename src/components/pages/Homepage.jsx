@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "../../App.css";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import "../../fonts.css";
-import Typing from "react-typing-effect";
+// import Typing from "react-typing-effect";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Card } from "react-bootstrap";
 
@@ -11,7 +11,7 @@ const Homepage = () => {
   const [apiData, setApiData] = useState("");
   const [mood, setMood] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [songData, setSongData] = useState(null); // State to store song data
+  const [songData, setSongData] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -155,7 +155,7 @@ const Homepage = () => {
                   </Card.Body>
                 </Card>
               )}
-              {loading && <p className="text-white output-font">Loading...</p>}
+              {loading && <p className="text-white text-xl custom-font">Loading...</p>}
             </div>
           </div>
         </div>
