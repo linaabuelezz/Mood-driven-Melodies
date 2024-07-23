@@ -2,13 +2,16 @@ import { useState, useEffect } from "react";
 import "../../App.css";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import "../../fonts.css";
-import Typing from 'react-typing-effect';
+import Typing from "react-typing-effect";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Card } from "react-bootstrap";
 
 const Homepage = () => {
   const [loading, setLoading] = useState(false);
   const [apiData, setApiData] = useState("");
   const [mood, setMood] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [songData, setSongData] = useState(null); // State to store song data
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,12 +33,41 @@ const Homepage = () => {
 
   const fetchData = async () => {
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-    const prompt = `You are supposed to be a music expert who is in touch with many genres, so suggest a song that a person might like to listen to while they are ${mood}. Just provide the name of the song and the artist. Suggest one song but make it different each time the prompt is called, so have a lot of options and select one.`;
+    const prompt = `You are supposed to be a music expert who is in touch with many genres, so suggest a song that a person might like to listen to while they are ${mood}. Just provide the name of the song and the artist in the form song name artist. Suggest one song but make it different each time the prompt is called, so have a lot of options and select one.`;
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
     setApiData(text);
-    setLoading(false);
+    console.log(text);
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    var requestOptions = {
+      method: "get",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+
+    fetch(
+      `https://v1.nocodeapi.com/linaabuelezz/spotify/QMVsrAkPPvfyacwN/search?q=${text}&type=track&perPage=1&page=1`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        const track = result.tracks.items[0];
+        const songDetails = {
+          name: track.name,
+          artist: track.artists[0].name,
+          albumCover: track.album.images[0].url,
+          spotifyLink: track.external_urls.spotify,
+        };
+        setSongData(songDetails);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log("error", error);
+        setLoading(false);
+      });
   };
 
   const genAI = new GoogleGenerativeAI(
@@ -77,7 +109,7 @@ const Homepage = () => {
     <>
       <div
         id="stars-container"
-        className="min-h-screen p-0 pt-8 text-center relative w-full h-screen overflow-hidden bg-black z-1"
+        className="min-h-screen p-0 pt-8 text-center relative w-full h-screen overflow-y-auto bg-black z-1"
       >
         <div className="content-container">
           <h1 className="font-bold text-4xl pb-6 z-10 text-white pt-4 custom-font">
@@ -111,8 +143,17 @@ const Homepage = () => {
           <div className="z-20">
             <h2 className="custom-font text-xl mb-3 text-white">Song suggestion:</h2>
             <div className="border-2 border-gray-500 p-4 rounded-lg max-w-sm mx-auto z-20 bg-black">
-              {!loading && (
-                <Typing className="text-align-left text-white output-font text-lg" text={apiData} />
+              {!loading && songData && (
+                <Card>
+                  <Card.Img src={songData.albumCover} alt="Album cover" />
+                  <Card.Body>
+                    <Card.Title className="text-black">{songData.name}</Card.Title>
+                    <Card.Text className="text-black">{songData.artist}</Card.Text>
+                    <Card.Link href={songData.spotifyLink} target="_blank" className="text-blue-500">
+                      Listen on Spotify
+                    </Card.Link>
+                  </Card.Body>
+                </Card>
               )}
               {loading && <p className="text-white output-font">Loading...</p>}
             </div>
