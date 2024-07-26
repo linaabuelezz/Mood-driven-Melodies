@@ -24,6 +24,7 @@ const TopTracks = ({ token }) => {
       });
       setData(response.data);
       setArtistData("");
+      console.log(data);
     } catch (error) {
       setError("Failed to fetch top tracks.");
       console.error(error);
@@ -44,6 +45,7 @@ const TopTracks = ({ token }) => {
       });
       setArtistData(response.data);
       setData("");
+      console.log(artistData);
     } catch (error) {
       setError("Failed to fetch top artists.");
       console.error(error);
@@ -144,12 +146,12 @@ const TopTracks = ({ token }) => {
                 </div>
                 <div className="ml-4">
                   {item.preview_url ? (
-                    <audio controls className="w-32">
+                    <audio controls className="w-48 mr-2">
                       <source src={item.preview_url} type="audio/mpeg" />
                       Your browser does not support the audio element.
                     </audio>
                   ) : (
-                    <p className="text-gray-500">Audio not available</p>
+                    <p className="text-gray-500 mr-4">Audio not available</p>
                   )}
                 </div>
               </div>
