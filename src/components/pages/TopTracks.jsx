@@ -86,12 +86,12 @@ const TopTracks = ({ token }) => {
   }, []);
 
   return (
-      <div
-        ref={starsContainerRef}
-        id="stars-container"
-        className="min-h-screen p-0 pt-8 text-center relative w-full h-screen overflow-y-auto bg-black z-1"
-      >
-    <div className="content-container">
+    <div
+      ref={starsContainerRef}
+      id="stars-container"
+      className="min-h-screen p-0 pt-8 text-center relative w-full h-screen overflow-y-auto bg-black z-1"
+    >
+      <div className="content-container">
         <button
           onClick={handleGetTopTracks}
           className="mt-4 mr-2 bg-blue-800 rounded-xl p-2 shadow-lg text-white button-font z-20 hover:scale-110"
@@ -111,16 +111,17 @@ const TopTracks = ({ token }) => {
         {artistData?.items && (
           <div>
             {artistData.items.map((artist, key) => (
-              <div key={key}>
-                <p className="text-white">
-                  {key + 1}. {artist.name}
-                </p>
+              <div key={key} className="flex items-center my-4">
                 {artist.images[0]?.url && (
                   <img
                     src={artist.images[0].url}
                     alt={`${artist.name} cover`}
+                    className="w-16 h-16 object-cover mr-4"
                   />
                 )}
+                <div className="flex-1 text-left">
+                  <p className="text-white font-bold">{key + 1}. {artist.name}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -129,22 +130,28 @@ const TopTracks = ({ token }) => {
         {data?.items && (
           <div>
             {data.items.map((item, key) => (
-              <div key={key}>
-                <p className="text-white">
-                  {key + 1}. {item.name} - {item.artists[0].name}
-                </p>
+              <div key={key} className="flex items-center my-4">
                 {item.album.images[0]?.url && (
                   <img
                     src={item.album.images[0].url}
                     alt={`${item.name} cover`}
+                    className="w-16 h-16 object-cover mr-4"
                   />
                 )}
-                {item.preview_url && (
-                  <audio controls>
-                    <source src={item.preview_url} type="audio/mpeg" />
-                    Your browser does not support the audio element.
-                  </audio>
-                )}
+                <div className="flex-1 text-left">
+                  <p className="text-white font-bold">{key + 1}. {item.name}</p>
+                  <p className="text-gray-400">{item.artists[0].name}</p>
+                </div>
+                <div className="ml-4">
+                  {item.preview_url ? (
+                    <audio controls className="w-32">
+                      <source src={item.preview_url} type="audio/mpeg" />
+                      Your browser does not support the audio element.
+                    </audio>
+                  ) : (
+                    <p className="text-gray-500">Audio not available</p>
+                  )}
+                </div>
               </div>
             ))}
           </div>
