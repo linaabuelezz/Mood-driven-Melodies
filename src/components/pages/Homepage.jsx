@@ -5,6 +5,7 @@ import "../../fonts.css";
 // import Typing from "react-typing-effect";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const Homepage = () => {
   const [loading, setLoading] = useState(false);
@@ -91,7 +92,7 @@ const Homepage = () => {
 
   useEffect(() => {
     const starsContainer = document.getElementById("stars-container");
-    const stars = createStars(200);
+    const stars = createStars(300);
 
     stars.forEach((star) => {
       const starElement = document.createElement("div");
@@ -105,12 +106,25 @@ const Homepage = () => {
     });
   }, []);
 
+  const navigate = useNavigate();
+
+  const handleTopTracksClick = () => {
+    navigate("/spotify-login"); 
+  };
+
+
   return (
     <>
       <div
         id="stars-container"
         className="min-h-screen p-0 pt-8 text-center relative w-full h-screen overflow-y-auto bg-black z-1"
       >
+        <button
+          onClick={handleTopTracksClick}
+          className="absolute top-4 right-5 bg-blue-800 rounded-xl p-2 shadow-lg text-white button-font z-20 hover:scale-110"
+        >
+          View Your Top Artists & Tracks
+          </button>
         <div className="content-container">
           <h1 className="font-bold text-4xl pb-6 z-10 text-white pt-4 custom-font">
             Mood-driven melodies
@@ -140,7 +154,7 @@ const Homepage = () => {
               <p className="text-red-500 mt-2 header-font">{errorMessage}</p>
             )}
           </form>
-          <div className="z-20">
+          <div className="z-20 mb-4">
             <h2 className="custom-font text-xl mb-3 text-white">Song suggestion:</h2>
             <div className="border-2 border-gray-500 p-4 rounded-lg max-w-sm mx-auto z-20 bg-black">
               {!loading && songData && (

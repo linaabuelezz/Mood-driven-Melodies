@@ -1,15 +1,16 @@
-#root {
+#root, html, body {
   /*max-width: 1280px;*/
   margin: 0 auto;
-
+  overflow-x: hidden;
   text-align: center;
 }
 
 #stars-container {
-  position: relative;
-  overflow: hidden;
+  /* position: relative; */
   background: black;
   z-index: 1; /* Lower z-index for the stars container */
+  width: 100vw;
+  height: 100%;
 }
 
 .star {
