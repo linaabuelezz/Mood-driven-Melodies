@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "../../App.css";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import "../../fonts.css";
-// import Typing from "react-typing-effect";
+import { FaArrowDown } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,11 @@ const Homepage = () => {
   const [mood, setMood] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [songData, setSongData] = useState(null);
+  const [showButton, setShowButton] = useState(false);
+
+  const handleArrowClick = () => {
+    setShowButton(!showButton);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -55,7 +60,7 @@ const Homepage = () => {
     )
       .then((response) => response.json())
       .then((result) => {
-        const track = result.tracks.items[0];
+        const track = result?.tracks.items[0];
         const songDetails = {
           name: track.name,
           artist: track.artists[0].name,
@@ -109,9 +114,8 @@ const Homepage = () => {
   const navigate = useNavigate();
 
   const handleTopTracksClick = () => {
-    navigate("/spotify-login"); 
+    navigate("/spotify-login");
   };
-
 
   return (
     <>
@@ -119,34 +123,42 @@ const Homepage = () => {
         id="stars-container"
         className="min-h-screen p-0 pt-8 text-center relative w-full h-screen overflow-y-auto bg-black z-1"
       >
+        {/* Button that shows on larger screens */}
         <button
           onClick={handleTopTracksClick}
-          className="absolute top-4 right-5 bg-blue-800 rounded-xl p-2 shadow-lg text-white button-font z-20 hover:scale-110"
+          className={`absolute top-4 right-4 sm:right-5 bg-blue-800 rounded-xl p-2 shadow-lg text-white button-font z-20 hover:scale-110 ${showButton ? '' : 'hidden'} md:block`}
         >
           View Your Top Artists & Tracks
-          </button>
-        <div className="content-container">
-          <h1 className="font-bold text-4xl pb-6 z-10 text-white pt-4 custom-font">
+        </button>
+        
+        {/* Arrow icon that shows on smaller screens */}
+        <div
+          className={`absolute top-4 right-4 sm:right-5 z-20 cursor-pointer ${showButton ? 'hidden' : 'block'} md:hidden`}
+          onClick={handleArrowClick}
+        >
+          <FaArrowDown className="text-white text-2xl" />
+        </div>
+
+        <div className="content-container px-4 sm:px-6 lg:px-8">
+          <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl pb-6 z-10 text-white pt-4 custom-font">
             Mood-driven melodies
           </h1>
           <form
             onSubmit={handleSubmit}
-            className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg space-x-4 mb-4"
+            className="p-4 sm:p-6 max-w-md mx-auto bg-white rounded-xl shadow-lg space-y-4 mb-4"
           >
-            <label htmlFor="input" className="header-font text-xl">
+            <label htmlFor="input" className="header-font text-lg sm:text-xl">
               Please enter 1-3 words to describe your mood.
             </label>
-            <br></br>
             <input
               type="text"
               id="input"
-              className="border-2 border-gray-200 my-6 rounded-md button-font"
+              className="border-2 border-gray-200 my-4 sm:my-6 rounded-md button-font w-full"
               onChange={(e) => setMood(e.target.value)}
-            ></input>
-            <br></br>
+            />
             <button
               type="submit"
-              className="bg-blue-800 rounded-xl p-2  shadow-lg text-white button-font z-20 hover:scale-110"
+              className="bg-blue-800 rounded-xl p-2 shadow-lg text-white button-font z-20 hover:scale-110 w-full"
             >
               Load suggestion
             </button>
@@ -154,22 +166,22 @@ const Homepage = () => {
               <p className="text-red-500 mt-2 header-font">{errorMessage}</p>
             )}
           </form>
-          <div className="z-20 mb-4">
-            <h2 className="custom-font text-xl mb-3 text-white">Song suggestion:</h2>
-            <div className="border-2 border-gray-500 p-4 rounded-lg max-w-sm mx-auto z-20 bg-black">
+          <div className="mb-4">
+            <h2 className="custom-font text-lg sm:text-xl mb-3 text-white">Song suggestion:</h2>
+            <div className="border-2 border-gray-500 p-4 rounded-lg max-w-md mx-auto bg-black">
               {!loading && songData && (
                 <Card>
-                  <Card.Img src={songData.albumCover} alt="Album cover" />
+                  <Card.Img src={songData.albumCover} alt="Album cover" className="w-full h-auto" />
                   <Card.Body>
-                    <Card.Title className="text-black">{songData.name}</Card.Title>
-                    <Card.Text className="text-black">{songData.artist}</Card.Text>
+                    <Card.Title className="text-black text-lg sm:text-xl">{songData.name}</Card.Title>
+                    <Card.Text className="text-black text-sm sm:text-base">{songData.artist}</Card.Text>
                     <Card.Link href={songData.spotifyLink} target="_blank" className="text-blue-500">
                       Listen on Spotify
                     </Card.Link>
                   </Card.Body>
                 </Card>
               )}
-              {loading && <p className="text-white text-xl custom-font">Loading...</p>}
+              {loading && <p className="text-white text-lg sm:text-xl custom-font">Loading...</p>}
             </div>
           </div>
         </div>

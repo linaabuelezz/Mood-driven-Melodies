@@ -93,36 +93,38 @@ const TopTracks = ({ token }) => {
       id="stars-container"
       className="min-h-screen p-0 pt-8 text-center relative w-full h-screen overflow-y-auto bg-black z-1"
     >
-      <div className="content-container">
-        <button
-          onClick={handleGetTopTracks}
-          className="mt-4 mr-2 bg-blue-800 rounded-xl p-2 shadow-lg text-white button-font z-20 hover:scale-110"
-        >
-          Get Top Tracks
-        </button>
-        <button
-          onClick={handleGetTopArtists}
-          className="mt-4 bg-blue-800 rounded-xl p-2 shadow-lg text-white button-font z-20 hover:scale-110"
-        >
-          Get Top Artists
-        </button>
+      <div className="content-container px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row justify-center mb-4 mt-4">
+          <button
+            onClick={handleGetTopTracks}
+            className="mb-4 sm:mb-0 sm:mr-4 bg-blue-800 rounded-xl p-2 shadow-lg text-white button-font z-20 hover:scale-110"
+          >
+            Get Top Tracks
+          </button>
+          <button
+            onClick={handleGetTopArtists}
+            className="mb-4 sm:mb-0 sm:mr-4 bg-blue-800 rounded-xl p-2 shadow-lg text-white button-font z-20 hover:scale-110"
+          >
+            Get Top Artists
+          </button>
+        </div>
 
-        {loading && <p className="text-white">Loading...</p>}
-        {error && <p className="text-red-500">{error}</p>}
+        {loading && <p className="text-white text-lg">Loading...</p>}
+        {error && <p className="text-red-500 text-lg">{error}</p>}
 
         {artistData?.items && (
           <div>
             {artistData.items.map((artist, key) => (
-              <div key={key} className="flex items-center my-4">
+              <div key={key} className="flex flex-col sm:flex-row items-center my-4">
                 {artist.images[0]?.url && (
                   <img
                     src={artist.images[0].url}
                     alt={`${artist.name} cover`}
-                    className="w-16 h-16 object-cover mr-4"
+                    className="w-16 h-16 object-cover mb-2 sm:mb-0 sm:mr-4"
                   />
                 )}
                 <div className="flex-1 text-left">
-                  <p className="text-white font-bold">{key + 1}. {artist.name}</p>
+                  <p className="text-white font-bold text-base sm:text-lg">{key + 1}. {artist.name}</p>
                 </div>
               </div>
             ))}
@@ -132,26 +134,26 @@ const TopTracks = ({ token }) => {
         {data?.items && (
           <div>
             {data.items.map((item, key) => (
-              <div key={key} className="flex items-center my-4">
+              <div key={key} className="flex flex-col sm:flex-row items-center my-4">
                 {item.album.images[0]?.url && (
                   <img
                     src={item.album.images[0].url}
                     alt={`${item.name} cover`}
-                    className="w-16 h-16 object-cover mr-4"
+                    className="w-16 h-16 object-cover mb-2 sm:mb-0 sm:mr-4"
                   />
                 )}
                 <div className="flex-1 text-left">
-                  <p className="text-white font-bold">{key + 1}. {item.name}</p>
-                  <p className="text-gray-400">{item.artists[0].name}</p>
+                  <p className="text-white font-bold text-base sm:text-lg">{key + 1}. {item.name}</p>
+                  <p className="text-gray-400 text-sm sm:text-base">{item.artists[0].name}</p>
                 </div>
-                <div className="ml-4">
+                <div className="ml-0 sm:ml-4 mt-2 sm:mt-0">
                   {item.preview_url ? (
-                    <audio controls className="w-48 mr-2">
+                    <audio controls className="w-full sm:w-48">
                       <source src={item.preview_url} type="audio/mpeg" />
                       Your browser does not support the audio element.
                     </audio>
                   ) : (
-                    <p className="text-gray-500 mr-4">Audio not available</p>
+                    <p className="text-gray-500">Audio not available</p>
                   )}
                 </div>
               </div>
