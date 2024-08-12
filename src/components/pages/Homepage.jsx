@@ -6,6 +6,15 @@ import { FaArrowDown } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import {
+  MDBCard,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardBody,
+  MDBCardImage,
+  MDBRow,
+  MDBCol,
+} from "mdb-react-ui-kit";
 
 const Homepage = () => {
   const [loading, setLoading] = useState(false);
@@ -126,14 +135,18 @@ const Homepage = () => {
         {/* Button that shows on larger screens */}
         <button
           onClick={handleTopTracksClick}
-          className={`absolute top-4 right-4 sm:right-5 bg-blue-800 rounded-xl p-2 shadow-lg text-white button-font z-20 hover:scale-110 ${showButton ? '' : 'hidden'} md:block`}
+          className={`absolute top-4 right-4 sm:right-5 bg-blue-800 rounded-xl p-2 shadow-lg text-white button-font z-20 hover:scale-110 ${
+            showButton ? "" : "hidden"
+          } md:block`}
         >
           View Your Top Artists & Tracks
         </button>
-        
+
         {/* Arrow icon that shows on smaller screens */}
         <div
-          className={`absolute top-4 right-4 sm:right-5 z-20 cursor-pointer ${showButton ? 'hidden' : 'block'} md:hidden`}
+          className={`absolute top-4 right-4 sm:right-5 z-20 cursor-pointer ${
+            showButton ? "hidden" : "block"
+          } md:hidden`}
           onClick={handleArrowClick}
         >
           <FaArrowDown className="text-white text-2xl" />
@@ -167,21 +180,46 @@ const Homepage = () => {
             )}
           </form>
           <div className="mb-4">
-            <h2 className="custom-font text-lg sm:text-xl mb-3 text-white">Song suggestion:</h2>
+            <h2 className="custom-font text-lg sm:text-xl mb-3 text-white">
+              Song suggestion:
+            </h2>
             <div className="border-2 border-gray-500 p-4 rounded-lg max-w-md mx-auto bg-black">
               {!loading && songData && (
-                <Card>
-                  <Card.Img src={songData.albumCover} alt="Album cover" className="w-full h-auto" />
-                  <Card.Body>
-                    <Card.Title className="text-black text-lg sm:text-xl">{songData.name}</Card.Title>
-                    <Card.Text className="text-black text-sm sm:text-base">{songData.artist}</Card.Text>
-                    <Card.Link href={songData.spotifyLink} target="_blank" className="text-blue-500">
-                      Listen on Spotify
-                    </Card.Link>
-                  </Card.Body>
-                </Card>
+                <MDBCard style={{ maxWidth: "540px" }}>
+                  <MDBRow className="g-0">
+                    <MDBCol md="4">
+                      <MDBCardImage
+                        src={songData.albumCover}
+                        alt="Album cover"
+                        className="w-full h-auto rounded-lg"
+                      />
+                    </MDBCol>
+                    <MDBCol md="8">
+                      <MDBCardBody>
+                        <text className="card-title text-black font-semibold text-md sm:text-lg title-font">
+                          {songData.name}
+                        </text>
+                        <MDBCardText  
+                          className="text-gray-600 text-sm sm:text-base title-font mb-3">
+                          {songData.artist}
+                        </MDBCardText>
+                        <Card.Link
+                          href={songData.spotifyLink}
+                          target="_blank"
+                          className="text-blue-500 title-font"
+                        >
+                          Listen on Spotify
+                        </Card.Link>
+                      </MDBCardBody>
+                    </MDBCol>
+                  </MDBRow>
+                </MDBCard>
               )}
-              {loading && <p className="text-white text-lg sm:text-xl custom-font">Loading...</p>}
+              {loading && (
+                <p className="text-white text-lg sm:text-xl custom-font">
+                  Loading...
+                </p>
+              )}
             </div>
           </div>
         </div>

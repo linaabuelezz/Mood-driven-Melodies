@@ -33,3 +33,7 @@
   z-index: 10; /* Higher z-index for the content */
 }
 
+.card-title {
+  margin-bottom: 0;
+}
+

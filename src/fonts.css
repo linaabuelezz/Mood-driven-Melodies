@@ -34,3 +34,12 @@
     font-family: 'OutputFont', Serif;
 }
 
+@font-face {
+    font-family: 'TitleFont';
+    src: url('/assets/fonts/GothamMedium.ttf')
+}
+
+.title-font {
+    font-family: 'TitleFont', Serif;
+}
+
